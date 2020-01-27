@@ -1,0 +1,6 @@
+# Server configurations
+apple:
+  dock:
+    # Orientation of the dock
+    # Possible values: top right bottom left
+    orientation: bottom
