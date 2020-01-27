@@ -4,7 +4,7 @@
 
 ## Run like
 
-`gobee -f config.yaml`
+`gobee -f config-examples/mac-os-catalina.yaml`
 
 ## Config Like
 
