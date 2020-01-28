@@ -1,6 +1,44 @@
-# Server configurations
+# All Apple-specific configuration
 apple:
+  # Configuration relating to System Preferences > Dock
   dock:
-    # Orientation of the dock
-    # Possible values: top right bottom left
-    orientation: bottom
+    # Size
+    # 16 - 128
+    tile-size: 37
+
+    # Magnification
+    magnification:
+      enabled: true
+      # 16 - 128
+      size: 49
+
+    # Position on screen
+    # left / bottom / right
+    position: bottom
+
+    # Minimise windows using
+    # suck / genie / scale
+    minimise-effect: genie
+
+    # Prefer tabs when opening documents
+    # fullscreen / always / manual
+    prefer-tabs: fullscreen
+
+    # Double-click a window's title bar to
+    # Maximize / Minimize / None
+    double-click-title-to: Maximize
+
+    # Minimise windows into application icon
+    minimise-to-app-icon: true
+
+    # Animate opening applications
+    animate-opening: true
+
+    # Automatically hide and show the dock
+    auto-hide: true
+
+    # Show indicators for open applications
+    show-open-indicator: true
+
+    # Show recent applications in the Dock
+    show-recent: false

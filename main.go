@@ -5,22 +5,12 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 
 	"gopkg.in/yaml.v2"
-)
 
-type Config struct {
-	Apple struct {
-		Dock struct {
-			Orientation string `yaml:"orientation"`
-		} `yaml:"dock"`
-	} `yaml:"apple"`
-	Database struct {
-		Username string `yaml:"user"`
-		Password string `yaml:"pass"`
-	} `yaml:"database"`
-}
+	"github.com/mattcanty/gobee/pkg/config"
+	"github.com/mattcanty/gobee/pkg/systempreferences"
+)
 
 func main() {
 	var fileName string
@@ -38,16 +28,12 @@ func main() {
 	}
 	defer f.Close()
 
-	var cfg Config
+	var cfg config.Config
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&cfg)
 	if err != nil {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 
-	cmd := exec.Command("defaults", "write", "com.apple.dock", "orientation", "-string", cfg.Apple.Dock.Orientation)
-	err = cmd.Run()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
+	systempreferences.ConfigureDock(cfg.Apple.Dock)
 }

@@ -1,5 +1,7 @@
 # Gobee
 
+:computer: :honeybee:
+
 [![Actions Status](https://github.com/mattcanty/gobee/workflows/pre-commit/badge.svg)](https://github.com/mattcanty/gobee/actions)
 
 ## Run like
