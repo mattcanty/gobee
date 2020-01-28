@@ -4,6 +4,15 @@
 
 [![Actions Status](https://github.com/mattcanty/gobee/workflows/pre-commit/badge.svg)](https://github.com/mattcanty/gobee/actions)
 
+Gobee is intended to alleviate the strain of finding that elusive
+Shell/Bash/PowerShell (delete appropriate) command from some random website.
+
+Intended to provide a single configuration file as a definition for one
+or many systems you manage.
+
+*Disclaimer: this is one of those nutty ideas that will probably go cold. But
+if you want to contribute please feel free to do so!*
+
 ## Run like
 
 ```shell
