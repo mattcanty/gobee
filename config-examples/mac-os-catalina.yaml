@@ -2,6 +2,14 @@
 apple:
   # Configuration relating to System Preferences > Dock
   dock:
+    # Applications kept in the dock
+    apps:
+      - /Applications/Firefox.app
+      - /Applications/Visual Studio Code.app
+      - /Applications/Spotify.app
+      - /Applications/Slack.app
+      - /System/Applications/Utilities/Terminal.app
+
     # Size
     # 16 - 128
     tile-size: 37

@@ -1,6 +1,7 @@
 package systempreferences
 
 import (
+	"fmt"
 	"log"
 	"os/exec"
 	"strconv"
@@ -23,11 +24,31 @@ func ConfigureDock(dockConf config.Dock) {
 	defaultsWriteInt("com.apple.dock", "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
 	defaultsWriteInt("com.apple.dock", "show-recents", boolToInt(dockConf.ShowRecent))
 
+	setDockApps(dockConf.Apps)
+
 	killDock()
+}
+
+func setDockApps(apps []string) {
+	defaultsDelete("com.apple.dock", "persistent-apps")
+
+	for _, app := range apps {
+		xmlApp := fmt.Sprintf("<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>%s</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>", app)
+		defaultsArrayAdd("com.apple.dock", "persistent-apps", xmlApp)
+	}
 }
 
 func killDock() {
 	cmd := exec.Command("killall", "Dock")
+
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
+	}
+}
+
+func defaultsDelete(location string, property string) {
+	cmd := exec.Command("defaults", "delete", location, property)
 
 	err := cmd.Run()
 	if err != nil {
@@ -46,6 +67,15 @@ func defaultsWriteString(location string, property string, value string) {
 
 func defaultsWriteInt(location string, property string, value int) {
 	cmd := exec.Command("defaults", "write", location, property, "-int", strconv.Itoa(value))
+
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
+	}
+}
+
+func defaultsArrayAdd(location string, property string, value string) {
+	cmd := exec.Command("defaults", "write", location, property, "-array-add", value)
 
 	err := cmd.Run()
 	if err != nil {

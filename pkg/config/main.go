@@ -12,7 +12,8 @@ type Apple struct {
 
 // Dock the configuration for Apple Dock
 type Dock struct {
-	TileSize      int `yaml:"tile-size"`
+	Apps          []string `yaml:"apps"`
+	TileSize      int      `yaml:"tile-size"`
 	Magnification struct {
 		Enabled bool `yaml:"enabled"`
 		Size    int  `yaml:"size"`

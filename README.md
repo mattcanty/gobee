@@ -25,3 +25,30 @@ gobee -f config-examples/mac-os-catalina.yaml
 ### Mac
 
 * Catalina: [mac-os-catalina.yaml](config-examples/mac-os-catalina.yaml)
+
+Could be as simple as having this one config file to make
+all your dreams come true.
+
+```yaml
+apple:
+  dock:
+    apps:
+      - /Applications/Firefox.app
+      - /Applications/Visual Studio Code.app
+      - /Applications/Spotify.app
+      - /Applications/Slack.app
+      - /System/Applications/Utilities/Terminal.app
+    tile-size: 37
+    magnification:
+      enabled: true
+      size: 49
+    position: bottom
+    minimise-effect: genie
+    prefer-tabs: fullscreen
+    double-click-title-to: Maximize
+    minimise-to-app-icon: true
+    animate-opening: true
+    auto-hide: true
+    show-open-indicator: true
+    show-recent: false
+```
