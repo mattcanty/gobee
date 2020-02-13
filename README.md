@@ -33,11 +33,11 @@ all your dreams come true.
 apple:
   dock:
     apps:
-      - /Applications/Firefox.app
-      - /Applications/Visual Studio Code.app
-      - /Applications/Spotify.app
-      - /Applications/Slack.app
-      - /System/Applications/Utilities/Terminal.app
+      - Firefox
+      - Visual Studio Code
+      - Spotify
+      - Slack
+      - Terminal
     tile-size: 37
     magnification:
       enabled: true

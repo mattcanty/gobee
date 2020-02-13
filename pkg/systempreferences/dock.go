@@ -1,10 +1,12 @@
 package systempreferences
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os/exec"
 	"strconv"
+	"strings"
 
 	"github.com/mattcanty/gobee/pkg/config"
 )
@@ -33,9 +35,37 @@ func setDockApps(apps []string) {
 	defaultsDelete("com.apple.dock", "persistent-apps")
 
 	for _, app := range apps {
-		xmlApp := fmt.Sprintf("<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>%s</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>", app)
+		appPath, err := getAppPath(app)
+
+		if err != nil {
+			log.Fatalf("getAppPath failed for %s\n", err)
+		}
+
+		xmlApp := fmt.Sprintf("<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>%s</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>", appPath)
 		defaultsArrayAdd("com.apple.dock", "persistent-apps", xmlApp)
 	}
+}
+
+func getAppPath(appName string) (string, error) {
+	cmd := exec.Command("mdfind", "-name", appName)
+
+	out, err := cmd.Output()
+
+	if err != nil {
+		return "", err
+	}
+
+	lines := bytes.Split(out, []byte("\n"))
+
+	for _, line := range lines {
+		text := string(line)
+
+		if strings.HasPrefix(text, "/") && strings.HasSuffix(text, ".app") {
+			return text, nil
+		}
+	}
+
+	return "", fmt.Errorf("Could not find path for app %s", appName)
 }
 
 func killDock() {

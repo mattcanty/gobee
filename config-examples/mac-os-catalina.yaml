@@ -4,11 +4,11 @@ apple:
   dock:
     # Applications kept in the dock
     apps:
-      - /Applications/Firefox.app
-      - /Applications/Visual Studio Code.app
-      - /Applications/Spotify.app
-      - /Applications/Slack.app
-      - /System/Applications/Utilities/Terminal.app
+      - Firefox
+      - Visual Studio Code
+      - Spotify
+      - Slack
+      - Terminal
 
     # Size
     # 16 - 128
