@@ -13,18 +13,20 @@ import (
 
 // ConfigureDock - Configures the Dock on MacOS
 func ConfigureDock(dockConf config.Dock) {
-	defaultsWriteInt("com.apple.dock", "tilesize", dockConf.TileSize)
-	defaultsWriteInt("com.apple.dock", "magnification", boolToInt(dockConf.Magnification.Enabled))
-	defaultsWriteInt("com.apple.dock", "largesize", dockConf.Magnification.Size)
-	defaultsWriteString("com.apple.dock", "orientation", dockConf.Position)
-	defaultsWriteString("com.apple.dock", "mineffect", dockConf.MinimiseEffect)
+	dockNamespace := "com.apple.dock"
+
+	defaultsWriteInt(dockNamespace, "tilesize", dockConf.TileSize)
+	defaultsWriteInt(dockNamespace, "magnification", boolToInt(dockConf.Magnification.Enabled))
+	defaultsWriteInt(dockNamespace, "largesize", dockConf.Magnification.Size)
+	defaultsWriteString(dockNamespace, "orientation", dockConf.Position)
+	defaultsWriteString(dockNamespace, "mineffect", dockConf.MinimiseEffect)
 	defaultsWriteString("NSGlobalDomain", "AppleWindowTabbingMode", dockConf.PreferTabs)
 	defaultsWriteString("NSGlobalDomain", "AppleActionOnDoubleClick", dockConf.DoubleClickTitleTo)
-	defaultsWriteInt("com.apple.dock", "minimize-to-application", boolToInt(dockConf.MinimiseToAppIcon))
-	defaultsWriteInt("com.apple.dock", "launchanim", boolToInt(dockConf.AnimateOpening))
-	defaultsWriteInt("com.apple.dock", "autohide", boolToInt(dockConf.AutoHide))
-	defaultsWriteInt("com.apple.dock", "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
-	defaultsWriteInt("com.apple.dock", "show-recents", boolToInt(dockConf.ShowRecent))
+	defaultsWriteInt(dockNamespace, "minimize-to-application", boolToInt(dockConf.MinimiseToAppIcon))
+	defaultsWriteInt(dockNamespace, "launchanim", boolToInt(dockConf.AnimateOpening))
+	defaultsWriteInt(dockNamespace, "autohide", boolToInt(dockConf.AutoHide))
+	defaultsWriteInt(dockNamespace, "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
+	defaultsWriteInt(dockNamespace, "show-recents", boolToInt(dockConf.ShowRecent))
 
 	setDockApps(dockConf.Apps)
 
