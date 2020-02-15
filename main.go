@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v2"
 
 	"github.com/mattcanty/gobee/pkg/config"
-	"github.com/mattcanty/gobee/pkg/systempreferences"
+	"github.com/mattcanty/gobee/pkg/macos/systempreferences"
 )
 
 func main() {
