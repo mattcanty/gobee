@@ -35,5 +35,5 @@ func main() {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 
-	systempreferences.ConfigureDock(cfg.Apple.Dock)
+	systempreferences.ConfigureDock(cfg.MacOS.Dock)
 }

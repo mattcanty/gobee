@@ -1,5 +1,5 @@
-# All Apple-specific configuration
-apple:
+# All MacOS-specific configuration
+macOS:
   # Configuration relating to System Preferences > Dock
   dock:
     # Applications kept in the dock

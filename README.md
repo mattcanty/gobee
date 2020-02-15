@@ -30,7 +30,7 @@ Could be as simple as having this one config file to make
 all your dreams come true.
 
 ```yaml
-apple:
+macOS:
   dock:
     apps:
       - Firefox

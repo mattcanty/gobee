@@ -2,15 +2,15 @@ package config
 
 // Config the configuration definition
 type Config struct {
-	Apple `yaml:"apple"`
+	MacOS `yaml:"macOS"`
 }
 
-// Apple the configuration for Apple OS
-type Apple struct {
+// MacOS the configuration for Mac OS
+type MacOS struct {
 	Dock `yaml:"dock"`
 }
 
-// Dock the configuration for Apple Dock
+// Dock the configuration for MacOS Dock
 type Dock struct {
 	Apps          []string `yaml:"apps"`
 	TileSize      int      `yaml:"tile-size"`
