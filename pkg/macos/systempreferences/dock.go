@@ -8,25 +8,25 @@ import (
 	"strings"
 
 	"github.com/mattcanty/gobee/pkg/config"
-	defaults "github.com/mattcanty/gobee/pkg/macos/helpers"
+	macoshelpers "github.com/mattcanty/gobee/pkg/macos/helpers"
 )
 
 // ConfigureDock - Configures the Dock on MacOS
 func ConfigureDock(dockConf config.Dock) {
 	dockNamespace := "com.apple.dock"
 
-	defaults.WriteInt(dockNamespace, "tilesize", dockConf.TileSize)
-	defaults.WriteInt(dockNamespace, "magnification", boolToInt(dockConf.Magnification.Enabled))
-	defaults.WriteInt(dockNamespace, "largesize", dockConf.Magnification.Size)
-	defaults.WriteString(dockNamespace, "orientation", dockConf.Position)
-	defaults.WriteString(dockNamespace, "mineffect", dockConf.MinimiseEffect)
-	defaults.WriteString("NSGlobalDomain", "AppleWindowTabbingMode", dockConf.PreferTabs)
-	defaults.WriteString("NSGlobalDomain", "AppleActionOnDoubleClick", dockConf.DoubleClickTitleTo)
-	defaults.WriteInt(dockNamespace, "minimize-to-application", boolToInt(dockConf.MinimiseToAppIcon))
-	defaults.WriteInt(dockNamespace, "launchanim", boolToInt(dockConf.AnimateOpening))
-	defaults.WriteInt(dockNamespace, "autohide", boolToInt(dockConf.AutoHide))
-	defaults.WriteInt(dockNamespace, "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
-	defaults.WriteInt(dockNamespace, "show-recents", boolToInt(dockConf.ShowRecent))
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "tilesize", dockConf.TileSize)
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "magnification", boolToInt(dockConf.Magnification.Enabled))
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "largesize", dockConf.Magnification.Size)
+	macoshelpers.RunDefaultsWriteStringCmd(dockNamespace, "orientation", dockConf.Position)
+	macoshelpers.RunDefaultsWriteStringCmd(dockNamespace, "mineffect", dockConf.MinimiseEffect)
+	macoshelpers.RunDefaultsWriteStringCmd("NSGlobalDomain", "AppleWindowTabbingMode", dockConf.PreferTabs)
+	macoshelpers.RunDefaultsWriteStringCmd("NSGlobalDomain", "AppleActionOnDoubleClick", dockConf.DoubleClickTitleTo)
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "minimize-to-application", boolToInt(dockConf.MinimiseToAppIcon))
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "launchanim", boolToInt(dockConf.AnimateOpening))
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "autohide", boolToInt(dockConf.AutoHide))
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
+	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "show-recents", boolToInt(dockConf.ShowRecent))
 
 	setDockApps(dockConf.Apps)
 
@@ -34,7 +34,7 @@ func ConfigureDock(dockConf config.Dock) {
 }
 
 func setDockApps(apps []string) {
-	defaults.Delete("com.apple.dock", "persistent-apps")
+	macoshelpers.RunDefaultsDeleteCmd("com.apple.dock", "persistent-apps")
 
 	for _, app := range apps {
 		appPath, err := getAppPath(app)
@@ -44,7 +44,7 @@ func setDockApps(apps []string) {
 		}
 
 		xmlApp := fmt.Sprintf("<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>%s</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>", appPath)
-		defaults.ArrayAdd("com.apple.dock", "persistent-apps", xmlApp)
+		macoshelpers.RunDefaultsArrayAddCmd("com.apple.dock", "persistent-apps", xmlApp)
 	}
 }
 
