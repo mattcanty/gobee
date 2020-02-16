@@ -3,7 +3,6 @@ package systempreferences
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"os/exec"
 	"strings"
 
@@ -12,46 +11,107 @@ import (
 )
 
 // ConfigureDock - Configures the Dock on MacOS
-func ConfigureDock(dockConf config.Dock) {
-	dockNamespace := "com.apple.dock"
+func ConfigureDock(dockConf config.Dock) error {
+	err := macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "tilesize", dockConf.TileSize)
 
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "tilesize", dockConf.TileSize)
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "magnification", boolToInt(dockConf.Magnification.Enabled))
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "largesize", dockConf.Magnification.Size)
-	macoshelpers.RunDefaultsWriteStringCmd(dockNamespace, "orientation", dockConf.Position)
-	macoshelpers.RunDefaultsWriteStringCmd(dockNamespace, "mineffect", dockConf.MinimiseEffect)
-	macoshelpers.RunDefaultsWriteStringCmd("NSGlobalDomain", "AppleWindowTabbingMode", dockConf.PreferTabs)
-	macoshelpers.RunDefaultsWriteStringCmd("NSGlobalDomain", "AppleActionOnDoubleClick", dockConf.DoubleClickTitleTo)
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "minimize-to-application", boolToInt(dockConf.MinimiseToAppIcon))
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "launchanim", boolToInt(dockConf.AnimateOpening))
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "autohide", boolToInt(dockConf.AutoHide))
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
-	macoshelpers.RunDefaultsWriteIntCmd(dockNamespace, "show-recents", boolToInt(dockConf.ShowRecent))
+	if err != nil {
+		return err
+	}
 
-	setDockApps(dockConf.Apps)
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "magnification", boolToInt(dockConf.Magnification.Enabled))
 
-	killDock()
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "largesize", dockConf.Magnification.Size)
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteStringCmd("com.apple.dock", "orientation", dockConf.Position)
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteStringCmd("com.apple.dock", "mineffect", dockConf.MinimiseEffect)
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteStringCmd("NSGlobalDomain", "AppleWindowTabbingMode", dockConf.PreferTabs)
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteStringCmd("NSGlobalDomain", "AppleActionOnDoubleClick", dockConf.DoubleClickTitleTo)
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "minimize-to-application", boolToInt(dockConf.MinimiseToAppIcon))
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "launchanim", boolToInt(dockConf.AnimateOpening))
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "autohide", boolToInt(dockConf.AutoHide))
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "show-process-indicators", boolToInt(dockConf.ShowOpenIndicator))
+
+	if err != nil {
+		return err
+	}
+
+	err = macoshelpers.RunDefaultsWriteIntCmd("com.apple.dock", "show-recents", boolToInt(dockConf.ShowRecent))
+
+	if err != nil {
+		return err
+	}
+
+	err = setDockApps(dockConf.Apps)
+
+	if err != nil {
+		return err
+	}
+
+	return killDock()
 }
 
-func setDockApps(apps []string) {
+func setDockApps(apps []string) error {
 	macoshelpers.RunDefaultsDeleteCmd("com.apple.dock", "persistent-apps")
 
 	for _, app := range apps {
 		appPath, err := getAppPath(app)
 
 		if err != nil {
-			log.Fatalf("getAppPath failed for %s\n", err)
+			return err
 		}
 
 		xmlApp := fmt.Sprintf("<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>%s</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>", appPath)
-		macoshelpers.RunDefaultsArrayAddCmd("com.apple.dock", "persistent-apps", xmlApp)
+		return macoshelpers.RunDefaultsArrayAddCmd("com.apple.dock", "persistent-apps", xmlApp)
 	}
+
+	return nil
 }
 
 func getAppPath(appName string) (string, error) {
-	cmd := exec.Command("mdfind", "-name", appName)
-
-	out, err := cmd.Output()
+	out, err := exec.Command("mdfind", "-name", appName).Output()
 
 	if err != nil {
 		return "", err
@@ -70,20 +130,14 @@ func getAppPath(appName string) (string, error) {
 	return "", fmt.Errorf("Could not find path for app %s", appName)
 }
 
-func killDock() {
-	cmd := exec.Command("killall", "Dock")
-
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
+func killDock() error {
+	return exec.Command("killall", "Dock").Run()
 }
 
-func boolToInt(b bool) int {
-	var bitSetVar int
-	if b {
-		bitSetVar = 1
+func boolToInt(booleanValue bool) int {
+	if booleanValue {
+		return 1
 	}
 
-	return bitSetVar
+	return 0
 }

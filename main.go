@@ -35,5 +35,9 @@ func main() {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 
-	systempreferences.ConfigureDock(cfg.MacOS.Dock)
+	err = systempreferences.ConfigureDock(cfg.MacOS.Dock)
+
+	if err != nil {
+		log.Fatalf("Failed to apply configuration. %s\n", err)
+	}
 }
