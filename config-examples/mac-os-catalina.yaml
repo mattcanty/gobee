@@ -12,7 +12,7 @@ macOS:
 
     # Size
     # 16 - 128
-    tile-size: 37
+    tileSize: 37
 
     # Magnification
     magnification:
@@ -26,27 +26,27 @@ macOS:
 
     # Minimise windows using
     # suck / genie / scale
-    minimise-effect: genie
+    minimiseEffect: genie
 
     # Prefer tabs when opening documents
     # fullscreen / always / manual
-    prefer-tabs: fullscreen
+    preferTabs: fullscreen
 
     # Double-click a window's title bar to
     # Maximize / Minimize / None
-    double-click-title-to: Maximize
+    doubleClickTitleTo: Maximize
 
     # Minimise windows into application icon
-    minimise-to-app-icon: true
+    minimiseToAppIcon: true
 
     # Animate opening applications
-    animate-opening: true
+    animateOpening: true
 
     # Automatically hide and show the dock
-    auto-hide: true
+    autoHide: true
 
     # Show indicators for open applications
-    show-open-indicator: true
+    showOpenIndicator: true
 
     # Show recent applications in the Dock
-    show-recent: false
+    showRecent: false

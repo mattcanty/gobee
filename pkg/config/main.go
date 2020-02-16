@@ -13,18 +13,18 @@ type MacOS struct {
 // Dock the configuration for MacOS Dock
 type Dock struct {
 	Apps          []string `yaml:"apps"`
-	TileSize      int      `yaml:"tile-size"`
+	TileSize      int      `yaml:"tileSize"`
 	Magnification struct {
 		Enabled bool `yaml:"enabled"`
 		Size    int  `yaml:"size"`
 	} `yaml:"magnification"`
 	Position           string `yaml:"position"`
-	MinimiseEffect     string `yaml:"minimise-effect"`
-	PreferTabs         string `yaml:"prefer-tabs"`
-	DoubleClickTitleTo string `yaml:"double-click-title-to"`
-	MinimiseToAppIcon  bool   `yaml:"minimise-to-app-icon"`
-	AnimateOpening     bool   `yaml:"animate-opening"`
-	AutoHide           bool   `yaml:"auto-hide"`
-	ShowOpenIndicator  bool   `yaml:"show-open-indicator"`
-	ShowRecent         bool   `yaml:"show-recent"`
+	MinimiseEffect     string `yaml:"minimiseEffect"`
+	PreferTabs         string `yaml:"preferTabs"`
+	DoubleClickTitleTo string `yaml:"doubleClickTitleTo"`
+	MinimiseToAppIcon  bool   `yaml:"minimiseToAppIcon"`
+	AnimateOpening     bool   `yaml:"animateOpening"`
+	AutoHide           bool   `yaml:"autoHide"`
+	ShowOpenIndicator  bool   `yaml:"showOpenIndicator"`
+	ShowRecent         bool   `yaml:"showRecent"`
 }
