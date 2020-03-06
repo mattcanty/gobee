@@ -1,8 +1,8 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -13,24 +13,18 @@ import (
 )
 
 func main() {
-	var fileName string
-	flag.StringVar(&fileName, "f", "", "YAML file to parse.")
-	flag.Parse()
-
-	if fileName == "" {
-		fmt.Println("Please specify your config file using the -f option")
-		return
-	}
-
-	f, err := os.Open(fileName)
+	home, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+		log.Fatal(err)
 	}
-	defer f.Close()
+	defaultConfigPath := fmt.Sprintf("%s/.config/gobee/config.yaml", home)
+	contents, err := ioutil.ReadFile(defaultConfigPath)
+	if err != nil {
+		log.Fatalf("%s\nHave you created a Gobee config file at %s?", err, defaultConfigPath)
+	}
 
 	var cfg config.Config
-	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(&cfg)
+	err = yaml.Unmarshal(contents, &cfg)
 	if err != nil {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}

@@ -17,8 +17,11 @@ if you want to contribute please feel free to do so!_
 
 ```shell
 go install
-gobee -f config-examples/mac-os-catalina.yaml
+cat config-examples/mac-os-catalina.yaml >> ./config/gobee/config.yaml
+gobee
 ```
+
+:warning: There are no verbs yet... so `gobee` just _RUNS!_
 
 ## Config Like
 
