@@ -20,3 +20,7 @@ repos:
     rev: master
     hooks:
       - id: markdownlint
+  - repo: https://github.com/prettier/prettier
+    rev: 1.19.1
+    hooks:
+      - id: prettier

@@ -10,8 +10,8 @@ Shell/Bash/PowerShell (delete appropriate) command from some random website.
 Intended to provide a single configuration file as a definition for one
 or many systems you manage.
 
-*Disclaimer: this is one of those nutty ideas that will probably go cold. But
-if you want to contribute please feel free to do so!*
+_Disclaimer: this is one of those nutty ideas that will probably go cold. But
+if you want to contribute please feel free to do so!_
 
 ## Run like
 
@@ -24,7 +24,7 @@ gobee -f config-examples/mac-os-catalina.yaml
 
 ### Mac
 
-* Catalina: [mac-os-catalina.yaml](config-examples/mac-os-catalina.yaml)
+- Catalina: [mac-os-catalina.yaml](config-examples/mac-os-catalina.yaml)
 
 Could be as simple as having this one config file to make
 all your dreams come true.
