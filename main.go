@@ -14,24 +14,32 @@ import (
 
 func main() {
 	home, err := os.UserHomeDir()
+
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	defaultConfigPath := fmt.Sprintf("%s/.config/gobee/config.yaml", home)
 	contents, err := ioutil.ReadFile(defaultConfigPath)
 	if err != nil {
-		log.Fatalf("%s\nHave you created a Gobee config file at %s?", err, defaultConfigPath)
+		log.Fatalf("Failed to fin Gobee config %s\n", err)
 	}
 
 	var cfg config.Config
 	err = yaml.Unmarshal(contents, &cfg)
 	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+		log.Fatalf("Failed to Unmarshal YAMl. %s\n", err)
 	}
 
 	err = systempreferences.ConfigureDock(cfg.MacOS.Dock)
 
 	if err != nil {
-		log.Fatalf("Failed to apply configuration. %s\n", err)
+		log.Fatalf("Failed to ConfigureDock. %s\n", err)
+	}
+
+	err = systempreferences.ConfigureDateAndTime(cfg.MacOS.DateAndTime)
+
+	if err != nil {
+		log.Fatalf("Failed to ConfigureDateAndTime. %s\n", err)
 	}
 }

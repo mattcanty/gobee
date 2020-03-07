@@ -50,3 +50,21 @@ macOS:
 
     # Show recent applications in the Dock
     showRecent: false
+
+  # Configuration relating to System Preferences > Date & Time
+  dateAndTime:
+    # Clock configuration
+    clock:
+      # Show the date time in the menu bar
+      show: true
+
+      # The type of clock
+      # analogue / digital
+      type: digital
+
+      # Format of the clock if
+      # eg EEE d MMM  HH:mm:ss
+      format: EEE d MMM  HH:mm:ss
+
+      # Whether the separators should flash
+      flashSeparators: false

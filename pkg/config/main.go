@@ -7,10 +7,11 @@ type Config struct {
 
 // MacOS the configuration for Mac OS
 type MacOS struct {
-	Dock `yaml:"dock"`
+	Dock        `yaml:"dock"`
+	DateAndTime `yaml:"dateAndTime"`
 }
 
-// Dock the configuration for MacOS Dock
+// Dock configuration for MacOS Dock
 type Dock struct {
 	Apps          []string `yaml:"apps"`
 	TileSize      int      `yaml:"tileSize"`
@@ -27,4 +28,14 @@ type Dock struct {
 	AutoHide           bool   `yaml:"autoHide"`
 	ShowOpenIndicator  bool   `yaml:"showOpenIndicator"`
 	ShowRecent         bool   `yaml:"showRecent"`
+}
+
+// DateAndTime configuration for MacOS Date & Time
+type DateAndTime struct {
+	Clock struct {
+		Show            bool   `yaml:"show"`
+		Type            string `yaml:"type"`
+		Format          string `yaml:"format"`
+		FlashSeparators bool   `yaml:"flashSeparators"`
+	}
 }
