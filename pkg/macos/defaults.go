@@ -1,4 +1,4 @@
-package macoshelpers
+package macos
 
 import (
 	"os/exec"

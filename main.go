@@ -6,11 +6,24 @@ import (
 	"log"
 	"os"
 
+	"github.com/mattcanty/gobee/pkg/macos"
 	"gopkg.in/yaml.v2"
-
-	"github.com/mattcanty/gobee/pkg/config"
-	"github.com/mattcanty/gobee/pkg/macos/systempreferences"
 )
+
+type gobeeConfig struct {
+	macOS `yaml:"macOS"`
+}
+
+// MacOS the configuration for Mac OS
+type macOS struct {
+	macos.Dock        `yaml:"dock"`
+	macos.DateAndTime `yaml:"dateAndTime"`
+}
+
+type component interface {
+	GetChanges() []string
+	ApplyChanges() []string
+}
 
 func main() {
 	home, err := os.UserHomeDir()
@@ -25,21 +38,28 @@ func main() {
 		log.Fatalf("Failed to fin Gobee config %s\n", err)
 	}
 
-	var cfg config.Config
+	var cfg gobeeConfig
 	err = yaml.Unmarshal(contents, &cfg)
 	if err != nil {
 		log.Fatalf("Failed to Unmarshal YAMl. %s\n", err)
 	}
 
-	err = systempreferences.ConfigureDock(cfg.MacOS.Dock)
+	// getChanges(cfg.macOS.Dock)
+	// getChanges(cfg.macOS.DateAndTime)
 
-	if err != nil {
-		log.Fatalf("Failed to ConfigureDock. %s\n", err)
-	}
+	// err = systempreferences.ConfigureDock(cfg.MacOS.Dock)
 
-	err = systempreferences.ConfigureDateAndTime(cfg.MacOS.DateAndTime)
+	// if err != nil {
+	// 	log.Fatalf("Failed to ConfigureDock. %s\n", err)
+	// }
 
-	if err != nil {
-		log.Fatalf("Failed to ConfigureDateAndTime. %s\n", err)
-	}
+	// err = systempreferences.ConfigureDateAndTime(cfg.MacOS.DateAndTime)
+
+	// if err != nil {
+	// 	log.Fatalf("Failed to ConfigureDateAndTime. %s\n", err)
+	// }
 }
+
+// func getChanges(c component) {
+
+// }

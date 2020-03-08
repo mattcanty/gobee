@@ -1,4 +1,4 @@
-package macoshelpers
+package macos
 
 // Hard to test. There is something interesting on the topic here:
 // https://npf.io/2015/06/testing-exec-command/
